@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { View, TextInput, Button } from 'react-native'
 
-function SellerRegisterForm() {
+function Register() {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -37,4 +37,4 @@ function SellerRegisterForm() {
   )
 }
 
-export default SellerRegisterForm
+export default Register
