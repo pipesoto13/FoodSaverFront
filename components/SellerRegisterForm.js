@@ -7,7 +7,7 @@ function SellerRegisterForm() {
   const [password, setPassword] = useState('')
 
   function handleSubmit() {
-    console.log(name, age, password, terms, selectedLanguage)
+    console.log(name, email, password )
   }
 
   return (
