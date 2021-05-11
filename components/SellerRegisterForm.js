@@ -1,3 +1,4 @@
+import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react'
 import { View, TextInput, Button } from 'react-native'
 
@@ -12,6 +13,7 @@ function SellerRegisterForm() {
 
   return (
     <View>
+      <StatusBar style="auto" />
       <TextInput
         placeholder="Ingresa tu nombre"
         onChangeText={text => setName(text)}
