@@ -1,23 +1,17 @@
 import React, { useState, useContext } from 'react'
-import { View, TextInput, Button } from 'react-native'
-//import { AuthContext } from './components/context';
+import { View, TextInput, Button, TouchableOpacity, Text } from 'react-native'
+import { AuthContext } from '../components/context';
 
-function Register() {
-  const [name, setName] = useState('')
+function Login({navigation}) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  function handleSubmit() {
-    console.log(name, email, password )
-  }
+  const { signIn } = useContext(AuthContext)
+
+  const foundUser = [{userToken: 'agaghahyafhvaety', userName: 'Felipe'}]
 
   return (
     <View>
-      <TextInput
-        placeholder="Ingresa tu nombre"
-        onChangeText={text => setName(text)}
-        value={name}
-      />
       <TextInput
         placeholder="Ingresa tu correo electrónico"
         onChangeText={text => setEmail(text)}
@@ -31,11 +25,16 @@ function Register() {
         value={password}
       />
       <Button
-        title="Crear usuario"
-        onPress={handleSubmit}
+        title="Login"
+        onPress={() => signIn(foundUser)}
       />
+      <TouchableOpacity
+        onPress={() => navigation.navigate('Registro')}
+      >
+        <Text>Registrase</Text>
+      </TouchableOpacity>
     </View>
   )
 }
 
-export default Register
+export default Login
