@@ -9,14 +9,12 @@ import Login from "./screens/Login";
 import Home from "./screens/Home";
 import { AuthContext } from './components/context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-export default function App({navigation}) {
-  
-  //const [isLoading, setIsLoading] = React.useState(true);
-  //const [userToken, setUserToken] = React.useState(null); 
+export default function App() {
 
   const initialLoginState = {
     isLoading: true,
@@ -60,17 +58,29 @@ export default function App({navigation}) {
 
   
   const authContext = React.useMemo(() => ({
-    signIn: async(foundUser) => {
-      const userToken = String(foundUser[0].userToken);
-      const userName = foundUser[0].username;
-      
+    signIn: async(email, password) => {
+    
+      let userToken
+      let validUserId
+      userToken = null
       try {
+        const { data: { token, validUser } } = await axios({
+          method: 'POST',
+          baseURL: 'http://192.168.0.11:8000',
+          url: '/users/signin',
+          data: {
+            email,
+            password,
+          }
+      });
+        userToken = token
+        validUserId = validUser.id
         await AsyncStorage.setItem('userToken', userToken);
       } catch(e) {
         console.log(e);
       }
       // console.log('user token: ', userToken);
-      dispatch({ type: 'LOGIN', id: userName, token: userToken });
+      dispatch({ type: 'LOGIN', id: validUserId, token: userToken });
     },
     signOut: async() => {
       try {

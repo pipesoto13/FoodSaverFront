@@ -8,7 +8,7 @@ function Login({navigation}) {
 
   const { signIn } = useContext(AuthContext)
 
-  const foundUser = [{userToken: 'agaghahyafhvaety', userName: 'Felipe'}]
+  //const foundUser = [{userToken: 'agaghahyafhvaety', userName: 'Felipe'}]
 
   return (
     <View>
@@ -26,7 +26,7 @@ function Login({navigation}) {
       />
       <Button
         title="Login"
-        onPress={() => signIn(foundUser)}
+        onPress={() => signIn(email, password)}
       />
       <TouchableOpacity
         onPress={() => navigation.navigate('Registro')}
