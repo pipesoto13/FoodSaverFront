@@ -7,6 +7,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Register from "./screens/Register";
 import Login from "./screens/Login";
 import Home from "./screens/Home";
+import Splash from "./screens/Splash";
 import { AuthContext } from './components/context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
@@ -125,6 +126,7 @@ export default function App() {
       <NavigationContainer>
       {userToken == null ? (
         <Stack.Navigator>
+          <Tab.Screen name="Splash" component={Splash}/>
           <Tab.Screen name="Login" component={Login}/>
           <Tab.Screen name="Registro" component={Register}/>
         </Stack.Navigator>
