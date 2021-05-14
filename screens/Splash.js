@@ -6,51 +6,55 @@ import {
     Dimensions,
     StyleSheet,
     StatusBar,
-    Image
+    Image,
+    Animated
 } from 'react-native';
-//import * as Animatable from 'react-native-animatable';
-//import LinearGradient from 'react-native-linear-gradient';
+import * as Animatable from 'react-native-animatable'
+import { LinearGradient } from 'expo-linear-gradient'
 import { MaterialIcons  } from '@expo/vector-icons';
-import { useTheme } from '@react-navigation/native';
 
 const SplashScreen = ({navigation}) => {
-    const { colors } = useTheme();
 
-    return (
-      <View style={styles.container}>
-          <StatusBar backgroundColor='#009387' barStyle="light-content"/>
-        <View style={styles.header}>
-            <Image 
-                /* animation="bounceIn"
-                duraton="1500" */
-            source={require('../assets/splash.png')}
-            style={styles.logo}
-            resizeMode="stretch"
-            />
-        </View>
-        <View 
-            style={[styles.footer, {
-                backgroundColor: colors.background
-            }]}
-            /* animation="fadeInUpBig" */
-        >
-            <Text style={[styles.title, {
-                color: colors.text
-            }]}>Stay connected with everyone!</Text>
-            <Text style={styles.text}>Sign in with account</Text>
-            <View style={styles.button}>
-            <TouchableOpacity onPress={()=>navigation.navigate('Login')}>
-                <Text style={styles.textSign}>Get Started</Text>
-                <MaterialIcons 
-                  name="navigate-next"
-                  color="#fff"
-                  size={20}
-                />
-            </TouchableOpacity>
-            </View>
-        </View>
+  return (
+    <View style={styles.container}>
+        <StatusBar backgroundColor='#009387' barStyle="light-content"/>
+      <View style={styles.header}>
+        <Animatable.Image 
+          animation="bounceIn"
+          duraton="1500"
+          source={require('../assets/logo.png')}
+          style={styles.logo}
+          resizeMode="stretch"
+        />
       </View>
-    );
+      <Animatable.View 
+        style={styles.footer}
+        animation="fadeInUpBig"
+      >
+        <Text 
+          style={styles.title}
+        >
+          Salva comida mientras ayudas al planeta!
+        </Text>
+        <Text style={styles.text}>Inicia sesión con una cuenta</Text>
+        <View style={styles.button}>
+          <TouchableOpacity onPress={()=>navigation.navigate('Login')}>
+            <LinearGradient
+              colors={['#08d4c4', '#01ab9d']}
+              style={styles.signIn}
+            >
+              <Text style={styles.textSign}>Comienza</Text>
+              <MaterialIcons 
+                name="navigate-next"
+                color="#fff"
+                size={20}
+              />
+            </LinearGradient>
+          </TouchableOpacity>
+        </View>
+      </Animatable.View>
+    </View>
+  );
 };
 
 export default SplashScreen;

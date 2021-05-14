@@ -7,71 +7,59 @@ import {
   Platform,
   StyleSheet ,
   StatusBar,
-  Alert,
-  Button
 } from 'react-native';
-import { FontAwesome, Feather } from '@expo/vector-icons';
-import { useTheme } from '@react-navigation/native';
-import { AuthContext } from '../components/context';
+import { FontAwesome, Feather } from '@expo/vector-icons'
+import { AuthContext } from '../components/context'
+import * as Animatable from 'react-native-animatable'
+import { LinearGradient } from 'expo-linear-gradient'
 
 function Login({navigation}) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const { colors } = useTheme();
-
   const { signIn } = useContext(AuthContext)
 
   return (
-    <View>
+    <View style={styles.container}>
       <StatusBar backgroundColor='#009387' barStyle="light-content"/>
         <View style={styles.header}>
-            <Text style={styles.text_header}>Welcome!</Text>
+            <Text style={styles.text_header}>Bienvenido!</Text>
         </View>
-      <View 
-        style={[styles.footer, {
-        backgroundColor: colors.background
-        }]}
+      <Animatable.View
+        animation="fadeInUpBig"
+        style={styles.footer}
       >
-        <Text style={[styles.text_footer, {
-            color: colors.text
-          }]}>Email</Text>
+        <Text style={styles.text_footer}>Email</Text>
         <View style={styles.action}>
           <FontAwesome 
               name="user-o"
-              color={colors.text}
+              color="#05375a"
               size={20}
           />
           <TextInput
             placeholder="Ingresa tu correo"
             onChangeText={text => setEmail(text)}
             value={email}
-            style={[styles.textInput, {
-              color: colors.text
-            }]}
+            style={styles.textInput}
             autoCapitalize="none"
             keyboardType="email-address"
           />
         </View>
 
         <Text style={[styles.text_footer, {
-            color: colors.text,
-            marginTop: 35
+            marginTop: 35,
           }]}>Contraseña</Text>
           <View style={styles.action}>
             <Feather 
               name="lock"
-              color={colors.text}
+              color="#05375a"
               size={20}
             />
             <TextInput
               placeholder="Ingresa tu contraseña"
-              placeholderTextColor="#666666"
               onChangeText={text => setPassword(text)}
               secureTextEntry
-              style={[styles.textInput, {
-                color: colors.text
-              }]}
+              style={styles.textInput}
               autoCapitalize="none"
               value={password}
             />
@@ -81,11 +69,15 @@ function Login({navigation}) {
           <TouchableOpacity
             style={styles.signIn}
             onPress={() => signIn(email, password)}
-            style={styles.signIn}
           >
-            <Text style={[styles.textSign, {
+            <LinearGradient
+                  colors={['#08d4c4', '#01ab9d']}
+                  style={styles.signIn}
+            >
+              <Text style={[styles.textSign, {
                 color:'#fff'
-            }]}>Login</Text>
+              }]}>Login</Text>
+            </LinearGradient>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -101,7 +93,7 @@ function Login({navigation}) {
             }]}>Registrase</Text>
           </TouchableOpacity>
         </View>
-      </View>
+      </Animatable.View>
     </View>
   )
 }
