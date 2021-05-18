@@ -6,15 +6,18 @@ import {
   FlatList,
   ActivityIndicator,
   Button,
+  Image,
 } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import axios from 'axios'
 import { AuthContext } from '../components/context'
 
 
-export default function Posts() {
+export default function products() {
+
   const navigation = useNavigation()
-  const [posts, setPosts] = useState([])
+
+  const [products, setProducts] = useState([])
   const [error, setError] = useState(false)
   const [loading, setLoading] = useState(false)
 
@@ -27,7 +30,7 @@ export default function Posts() {
       baseURL: 'http://192.168.0.11:8000',
       url: '/products'
     })
-      .then(({ data }) => {setPosts(data)})
+      .then(({ data }) => {setProducts(data)})
       .catch((err) => {setError(true)})
       .finally(() => setLoading(false))
   }, [])
@@ -37,19 +40,26 @@ export default function Posts() {
   return (
     <View>
       <FlatList
-        data={posts}
+        style={styles.productsList}
+        data={products}
         renderItem={({ item }) => (
-          <View>
-            <Text style={styles.title}>{item.name}</Text>
-            <Text style={styles.title}>{item.price}</Text>
-            <Text style={styles.body}>{item.description}</Text>
-            <Button
-              title="View more"
-              onPress={() => navigation.navigate('Post', { id: item.id })}
+          <View style={styles.productsListContainer}>
+            <Image
+              style={styles.thumb}
+              source={require('../assets/logo.png')}
             />
+            <View style={styles.infoContainer}>
+              <Text style={styles.name}>{item.name}</Text>
+              <Text style={styles.price}>{item.price}</Text>
+              <Text style={styles.description}>{item.description}</Text>
+              <Button
+                title="View more"
+                onPress={() => navigation.navigate('ProductDetails', { id: item.id })}
+              />
+            </View>
           </View>
         )}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.id.toString()}
       />
       <Button
         title="Salir"
@@ -60,11 +70,34 @@ export default function Posts() {
 }
 
 const styles = StyleSheet.create({
-  title: {
-    fontSize: 24,
-    fontWeight: '800',
+  productsList: {
+    backgroundColor: '#fafafa',
   },
-  body: {
+  productsListContainer: {
+    backgroundColor: '#fafafa',
+    paddingVertical: 8,
+    marginHorizontal: 8,
+  },
+  thumb: {
+    height: 260,
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 16,
+  },
+  infoContainer: {
+    padding: 16,
+  },
+  name: {
+    fontSize: 22,
+    fontWeight: 'bold',
+  },
+  price: {
     fontSize: 16,
-  }
+    fontWeight: '600',
+    marginBottom: 8,
+  },
+  description: {
+    fontSize: 16,
+    fontWeight: '400',
+    color: '#787878',
+  },
 })
