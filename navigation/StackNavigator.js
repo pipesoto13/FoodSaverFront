@@ -8,6 +8,7 @@ import Register from "../screens/Register";
 import Login from "../screens/Login";
 import Splash from "../screens/Splash";
 import Profile from "../screens/Profile";
+import AddFood from "../screens/AddFood";
 
 const Stack = createStackNavigator();
 
@@ -31,6 +32,7 @@ const MainStackNavigator = () => {
         //options={{ headerShown: false }} 
       />
       <Stack.Screen name="ProductDetails" component={ProductDetails} />
+      <Stack.Screen name="AddFood" component={AddFood} />
     </Stack.Navigator>
   );
 };

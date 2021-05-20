@@ -7,9 +7,11 @@ import {
   ActivityIndicator,
   Button,
   Image,
+  TouchableOpacity,
 } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import axios from 'axios'
+import { FontAwesome } from '@expo/vector-icons'
 
 export default function products() {
 
@@ -40,44 +42,83 @@ export default function products() {
         style={styles.productsList}
         data={products}
         renderItem={({ item }) => (
-          <View style={styles.productsListContainer}>
-            <Image
-              style={styles.thumb}
-              source={require('../assets/logo.png')}
-            />
-            <View style={styles.infoContainer}>
-              <Text style={styles.name}>{item.name}</Text>
-              <Text style={styles.price}>{item.price}</Text>
-              <Text style={styles.description}>{item.description}</Text>
-              <Button
-                title="View more"
-                onPress={() => navigation.navigate('ProductDetails', { id: item.id })}
-              />
+          <TouchableOpacity onPress={() => navigation.navigate('ProductDetails', { id: item.id })}>
+            <View style={styles.productsListContainer}>
+              <Image
+                style={styles.thumb}
+                source={require('../assets/logo.png')}
+                />
+              <View style={styles.infoContainer}>
+                <Text style={styles.name}>{item.name}</Text>
+                <Text style={styles.price}>{item.price}</Text>
+                <Text style={styles.description}>{item.description}</Text>
+              </View>
             </View>
-          </View>
+          </TouchableOpacity>
         )}
         keyExtractor={(item) => item.id.toString()}
       />
+      <TouchableOpacity
+        style={{
+          bottom: 80,
+          left: 130,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+        onPress={() => navigation.navigate('AddFood')}
+      >
+        <View
+          style={{
+            width: 60,
+            height: 60,
+            borderRadius: 30,
+            backgroundColor: '#e32f45',
+            shadowColor: "#000",
+            shadowOffset: {
+              width: 0,
+              height: 4,
+            },
+            shadowOpacity: 0.39,
+            shadowRadius: 4.65,
+            elevation: 8,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <FontAwesome name="plus" size={34} color="#fefefe" />
+        </View>
+      </TouchableOpacity>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
   productsList: {
-    backgroundColor: '#fafafa',
+    backgroundColor: '#fefefe',
   },
   productsListContainer: {
+    flexDirection: 'row',
     backgroundColor: '#fafafa',
-    paddingVertical: 8,
-    marginHorizontal: 8,
+    height: 120,
+    margin: 8,
+    borderRadius: 16,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.39,
+    shadowRadius: 4.65,
+    elevation: 8,
   },
   thumb: {
-    height: 260,
+    height: 120,
+    width: 120,
     borderTopLeftRadius: 16,
-    borderTopRightRadius: 16,
+    borderBottomLeftRadius: 16,
   },
   infoContainer: {
-    padding: 16,
+    padding: 15,
   },
   name: {
     fontSize: 22,
