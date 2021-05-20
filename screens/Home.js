@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   View,
   Text,
@@ -10,8 +10,6 @@ import {
 } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import axios from 'axios'
-import { AuthContext } from '../components/context'
-
 
 export default function products() {
 
@@ -21,7 +19,6 @@ export default function products() {
   const [error, setError] = useState(false)
   const [loading, setLoading] = useState(false)
 
-  const { signOut } = useContext(AuthContext)
 
   useEffect(() => {
     setLoading(true)
@@ -60,10 +57,6 @@ export default function products() {
           </View>
         )}
         keyExtractor={(item) => item.id.toString()}
-      />
-      <Button
-        title="Salir"
-        onPress={() => signOut()}
       />
     </View>
   )
