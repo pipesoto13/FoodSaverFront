@@ -1,7 +1,15 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, View, Text, ActivityIndicator } from 'react-native'
+import { 
+  StyleSheet, 
+  View, 
+  Text, 
+  ActivityIndicator,
+  Button
+} from 'react-native'
 import { useRoute } from '@react-navigation/native'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios'
+import jwt_decode from "jwt-decode"
 
 export default function ProductDetails() {
   const route = useRoute()
@@ -22,6 +30,29 @@ export default function ProductDetails() {
       .finally(() => setLoading(false))
   }, [])
 
+  const requestProduct = async () => {
+    const userToken = await AsyncStorage.getItem('userToken');
+    const userTokenDecoded = jwt_decode(userToken)
+    const clientId = userTokenDecoded.userId
+    setLoading(true)
+    try {
+      const { data } = await axios({
+        method: 'POST',
+        baseURL: 'http://192.168.0.11:8000',
+        url: '/orders',
+        data: {
+          clientId,
+          productId: [product.id],
+        }
+      });
+      console.log('producto solicitado');
+      setLoading(false)
+    } catch (e) {
+      console.log(e);
+      setError(true)
+    }
+  }
+
   if(loading) return <ActivityIndicator />
   if(error) return <Text>Something went wrong</Text>
   return (
@@ -29,7 +60,14 @@ export default function ProductDetails() {
       <Text>{!!product && product.name}</Text>
       <Text>{!!product && product.description}</Text>
       <Text>{!!product && product.id}</Text>
+      <Text>{!!product && product.address}</Text>
+      <Text>{!!product && product.expDate}</Text>
       <Text>Pagina Producto</Text>
+      <Button
+        onPress={requestProduct}
+        title="Solicitar Producto"
+        color="#841584"
+      />
     </View>
   )
 }

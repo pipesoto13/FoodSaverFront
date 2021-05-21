@@ -73,8 +73,7 @@ export default function App() {
       } catch(e) {
         console.log(e);
       }
-      // console.log('user token: ', userToken);
-      dispatch({ type: 'LOGIN', id: validUserId, token: userToken });
+      dispatch({ type: 'LOGIN', id: validUserId, token: userToken })
     },
     signOut: async() => {
       try {
@@ -99,7 +98,6 @@ export default function App() {
       } catch(e) {
         console.log(e);
       }
-      // console.log('user token: ', userToken);
       dispatch({ type: 'RETRIEVE_TOKEN', token: userToken });
     }, 1000);
   }, []);
