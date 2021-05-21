@@ -48,7 +48,10 @@ export default function products({navigation, route}) {
   if(loading) return <ActivityIndicator />
   if(error) return <Text>Algo salió mal</Text>
   return (
-    <View>
+    <View style={{
+      flexDirection: 'column',
+      flex: 1
+    }}>
       <FlatList
         style={styles.productsList}
         data={products}
@@ -71,8 +74,10 @@ export default function products({navigation, route}) {
       />
       <TouchableOpacity
         style={{
-          bottom: 80,
-          left: 130,
+          alignSelf: 'flex-end',
+          position: 'absolute',
+          bottom: 30,
+          right: 15,
           justifyContent: 'center',
           alignItems: 'center',
         }}

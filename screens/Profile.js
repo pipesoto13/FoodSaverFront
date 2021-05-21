@@ -29,6 +29,9 @@ const Profile = ({route, navigation}) => {
           url: `/users/${userId}`,
           data: {
             name,
+            email,
+            password: 111,
+            address,
           },
           headers: {
             Authorization: `Bearer ${userToken}`,
