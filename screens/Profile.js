@@ -1,17 +1,16 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { View, Text, Button, StyleSheet, TextInput, ActivityIndicator, Platform, Image, Alert } from 'react-native';
-import { AuthContext } from '../components/context'
+import { View, SafeAreaView, ScrollView, Text, Button, StyleSheet, TextInput, ActivityIndicator, Platform, Image, TouchableOpacity } from 'react-native';
+import { AuthContext } from '../components/context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import axios from 'axios'
-import jwt_decode from "jwt-decode"
-import * as ImagePicker from 'expo-image-picker'
+import axios from 'axios';
+import jwt_decode from "jwt-decode";
+import * as ImagePicker from 'expo-image-picker';
 import mime from "mime";
+import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 
 
 const Profile = ({route, navigation}) => {
 
-  const [cameraRollPermission, setCameraRollPermission] = useState('denied')
-  const [cameraPermission, setCameraPermission] = useState(false)
   const [image, setImage] = useState(null)
 
   const [name, setName] = useState('')
@@ -117,52 +116,66 @@ const Profile = ({route, navigation}) => {
   //if(loading) return <ActivityIndicator />
   //if(error) return <Text>Algo salió mal</Text>
     return (
-      <View style={styles.container}>
-        <Text>Profile Screen</Text>
-        {!!image && !profilePhoto && (
-          <Image
-            style={styles.image}
-            source={{ uri: image.uri }}
+      <SafeAreaView style={styles.container}>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <View style={{ alignSelf: "center" }}>
+            <View style={styles.profileImage}>
+              {!!image && !profilePhoto && (
+                <Image
+                  style={styles.image}
+                  source={{ uri: image.uri }}
+                />
+              )}
+              {!!profilePhoto && (
+                <Image
+                  style={styles.image}
+                  source={{ uri: profilePhoto }}
+                />
+              )}
+            </View>
+            <TouchableOpacity style={styles.addContainer} onPress={handlePickImage}>
+              <View style={styles.add}>
+                <Ionicons name="camera" size={34} color="#fefefe"></Ionicons>
+              </View>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.infoContainer}>
+            <TextInput 
+              style={styles.text}
+              onChangeText={text => setName(text)}
+              value={name}
+            />
+          </View>     
+
+          <TextInput
+            placeholder="Ingresa nombre"
+            onChangeText={text => setName(text)}
+            value={name}
+            //style={styles.textInput}
           />
-        )}
-        {!!profilePhoto && (
-          <Image
-            style={styles.image}
-            source={{ uri: profilePhoto }}
+          <TextInput
+            placeholder="Email"
+            onChangeText={text => setEmail(text)}
+            value={email}
+            //style={styles.textInput}
           />
-        )}
-        <Button
-          title="Pick Image"
-          onPress={handlePickImage}
-        />
-        <TextInput
-          placeholder="Ingresa nombre"
-          onChangeText={text => setName(text)}
-          value={name}
-          //style={styles.textInput}
-        />
-        <TextInput
-          placeholder="Email"
-          onChangeText={text => setEmail(text)}
-          value={email}
-          //style={styles.textInput}
-        />
-        <TextInput
-          placeholder="Dirección"
-          onChangeText={text => setAddress(text)}
-          value={address}
-          //style={styles.textInput}
-        />
-        <Button
-          title="Salir"
-          onPress={() => signOut()}
-        />
-        <Button
-          title="Actualizar"
-          onPress={() => updateUserInfo()}
-        />
-        {!!image && <Text>{image.uri}</Text>}
-      </View>
+          <TextInput
+            placeholder="Dirección"
+            onChangeText={text => setAddress(text)}
+            value={address}
+            //style={styles.textInput}
+          />
+          <Button
+            title="Salir"
+            onPress={() => signOut()}
+          />
+          <Button
+            title="Actualizar"
+            onPress={() => updateUserInfo()}
+          />
+          {!!image && <Text>{image.uri}</Text>}
+        </ScrollView >
+      </SafeAreaView>
     );
 };
 
@@ -171,11 +184,44 @@ export default Profile;
 const styles = StyleSheet.create({
   container: {
     flex: 1, 
-    alignItems: 'center', 
-    justifyContent: 'center'
+    backgroundColor: "#fefefe"
+  },
+  profileImage: {
+    width: 200,
+    height: 200,
+    borderRadius: 100,
+    overflow: "hidden"
   },
   image: {
-    width: 400,
-    height: 300,
-  }
+    flex: 1,
+    height: undefined,
+    width: undefined
+  },
+  addContainer: {
+    alignSelf: 'flex-end',
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  add: {
+    backgroundColor: "#41444B",
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  infoContainer: {
+    alignSelf: "center",
+    alignItems: "center",
+    marginTop: 16
+  },
+  text: {
+    //fontFamily: "HelveticaNeue",
+    color: "#52575D",
+    fontWeight: "200", 
+    fontSize: 36 
+  },
 });
