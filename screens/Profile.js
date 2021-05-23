@@ -16,7 +16,7 @@ const Profile = ({route, navigation}) => {
 
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [profilePhoto, setprofilePhoto] = useState(null)
   const [address, setAddress] = useState('')
   const [error, setError] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -45,6 +45,7 @@ const Profile = ({route, navigation}) => {
 
     if(!dataImage.cancelled) {
       setImage(dataImage)
+      setprofilePhoto(null)
     }
   }
 
@@ -99,6 +100,7 @@ const Profile = ({route, navigation}) => {
             setName(data.name)
             setEmail(data.email)
             setAddress(data.address)
+            setprofilePhoto(data.photo)
           })
           .catch((err) => {setError(true)})
           .finally(() => setLoading(false))
@@ -117,10 +119,16 @@ const Profile = ({route, navigation}) => {
     return (
       <View style={styles.container}>
         <Text>Profile Screen</Text>
-        {!!image && (
+        {!!image && !profilePhoto && (
           <Image
             style={styles.image}
             source={{ uri: image.uri }}
+          />
+        )}
+        {!!profilePhoto && (
+          <Image
+            style={styles.image}
+            source={{ uri: profilePhoto }}
           />
         )}
         <Button
