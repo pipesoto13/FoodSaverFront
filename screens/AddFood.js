@@ -59,7 +59,6 @@ export default function ProductDetails({navigation, route}) {
   if(error) return <Text>Something went wrong</Text>
   return (
     <View style={styles.text}>
-      <Text>Adicionar comida</Text>
       <TextInput
         placeholder="Ingresa un título"
         onChangeText={text => setTitle(text)}

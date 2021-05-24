@@ -4,7 +4,11 @@ import {
   View, 
   Text, 
   ActivityIndicator,
-  Button
+  Button,
+  TouchableOpacity,
+  SafeAreaView,
+  Image,
+  Dimensions,
 } from 'react-native'
 import { useRoute } from '@react-navigation/native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -56,26 +60,75 @@ export default function ProductDetails() {
   if(loading) return <ActivityIndicator />
   if(error) return <Text>Something went wrong</Text>
   return (
-    <View style={styles.text}>
-      <Text>{!!product && product.name}</Text>
-      <Text>{!!product && product.description}</Text>
-      <Text>{!!product && product.id}</Text>
-      <Text>{!!product && product.address}</Text>
-      <Text>{!!product && product.expDate}</Text>
-      <Text>Pagina Producto</Text>
-      <Button
-        onPress={requestProduct}
-        title="Solicitar Producto"
-        color="#841584"
-      />
-    </View>
+    <SafeAreaView style={styles.container}>
+      {!!product && (
+        <Image
+          style={styles.foodImage}
+          source={{ uri: product.photo }}
+        />
+      )}
+      <View style={styles.infoContainer}>
+        <Text style={styles.title}>{!!product && product.name}</Text>
+        <Text style={styles.description}>{!!product && product.description}</Text>
+        <Text style={styles.price}>{!!product && (product.price=='0'? 'GRATIS':`$ ${product.price}`)}</Text>
+        <View>
+          <Text style={styles.expDate}>Fecha de vencimiento:</Text>
+          <Text style={styles.expDate}>{!!product && product.expDate}</Text>
+        </View>
+        <View>
+          <Text style={styles.location}>Ubicación aproximada</Text>
+          <Text style={styles.description}>{!!product && product.address}</Text>
+          <Button
+            onPress={requestProduct}
+            title="Solicitar Producto"
+            color="#841584"
+          />
+        </View>
+      </View>
+    </SafeAreaView>
   )
 }
 
+const {height, width} = Dimensions.get('window');
+
 const styles = StyleSheet.create({
-  text: {
+  container: {
+    backgroundColor: "#fefefe",
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+  },
+  imageContainer: {
+    alignSelf: 'center',
+    paddingTop: 25,
+  },
+  foodImage: {
+    width: width,
+    height: 300,
+  },
+  infoContainer: {
+    flex: 1,
+    paddingHorizontal: 20,
+    paddingVertical: 15,
+    fontSize: 18,
+  },
+  title: {
+    fontWeight: 'bold',
+    fontSize: 21,
+  },
+  description: {
+    paddingVertical: 15,
+    fontSize: 18,
+  },
+  price: {
+    fontWeight: 'bold',
+    fontSize: 18,
+  },
+  expDate: {
+    alignSelf: 'flex-end',
+    color: 'red',
+    fontSize: 14,
+  },
+  location: {
+    fontWeight: 'bold',
+    fontSize: 18,
   },
 })

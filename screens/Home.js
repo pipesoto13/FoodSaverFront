@@ -60,7 +60,7 @@ export default function products({navigation, route}) {
             <View style={styles.productsListContainer}>
               <Image
                 style={styles.thumb}
-                source={require('../assets/logo.png')}
+                source={{ uri: item.photo }}
                 />
               <View style={styles.infoContainer}>
                 <Text style={styles.name}>{item.name}</Text>

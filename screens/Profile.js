@@ -1,12 +1,13 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { View, SafeAreaView, ScrollView, Text, Button, StyleSheet, TextInput, ActivityIndicator, Platform, Image, TouchableOpacity } from 'react-native';
+import { View, SafeAreaView, ScrollView, Text, Dimensions, StyleSheet, TextInput, ActivityIndicator, Platform, Image, TouchableOpacity } from 'react-native';
 import { AuthContext } from '../components/context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import jwt_decode from "jwt-decode";
 import * as ImagePicker from 'expo-image-picker';
 import mime from "mime";
-import { Ionicons, MaterialIcons } from "@expo/vector-icons";
+import { Ionicons, FontAwesome } from "@expo/vector-icons";
+import { LinearGradient } from 'expo-linear-gradient'
 
 
 const Profile = ({route, navigation}) => {
@@ -16,7 +17,6 @@ const Profile = ({route, navigation}) => {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [profilePhoto, setprofilePhoto] = useState(null)
-  const [address, setAddress] = useState('')
   const [error, setError] = useState(false)
   const [loading, setLoading] = useState(false)
 
@@ -49,13 +49,11 @@ const Profile = ({route, navigation}) => {
   }
 
   const updateUserInfo = async () => {
-    console.log(name, email, address);
     const userToken = await AsyncStorage.getItem('userToken')
 
     const dataUser = new FormData();
     dataUser.append('name', name);
     dataUser.append('email', email);
-    dataUser.append('address', address);
     if (image) {
       dataUser.append('photo', {
         uri: image.uri,
@@ -98,7 +96,6 @@ const Profile = ({route, navigation}) => {
           .then(({ data }) => {
             setName(data.name)
             setEmail(data.email)
-            setAddress(data.address)
             setprofilePhoto(data.photo)
           })
           .catch((err) => {setError(true)})
@@ -117,80 +114,108 @@ const Profile = ({route, navigation}) => {
   //if(error) return <Text>Algo salió mal</Text>
     return (
       <SafeAreaView style={styles.container}>
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <View style={{ alignSelf: "center" }}>
-            <View style={styles.profileImage}>
-              {!!image && !profilePhoto && (
-                <Image
-                  style={styles.image}
-                  source={{ uri: image.uri }}
-                />
-              )}
-              {!!profilePhoto && (
-                <Image
-                  style={styles.image}
-                  source={{ uri: profilePhoto }}
-                />
-              )}
-            </View>
-            <TouchableOpacity style={styles.addContainer} onPress={handlePickImage}>
-              <View style={styles.add}>
-                <Ionicons name="camera" size={34} color="#fefefe"></Ionicons>
-              </View>
-            </TouchableOpacity>
+        <View style={styles.imageContainer}>
+          <View style={styles.profileImage}>
+            {!!image && !profilePhoto && (
+              <Image
+                style={styles.image}
+                source={{ uri: image.uri }}
+              />
+            )}
+            {!!profilePhoto && (
+              <Image
+                style={styles.image}
+                source={{ uri: profilePhoto }/* require('../assets/logo.png') */}
+              />
+            )}
           </View>
-          <View style={styles.infoContainer}>
-            <TextInput 
-              style={styles.text}
-              onChangeText={text => setName(text)}
-              value={name}
-            />
-          </View>     
+          <TouchableOpacity style={styles.addContainer} onPress={handlePickImage}>
+            <View style={styles.add}>
+              <Ionicons name="camera" size={34} color="#fefefe"></Ionicons>
+            </View>
+          </TouchableOpacity>
+        </View>
 
-          <TextInput
-            placeholder="Ingresa nombre"
+        <View style={styles.nameContainer}>
+          <TextInput 
+            style={styles.text}
             onChangeText={text => setName(text)}
             value={name}
-            //style={styles.textInput}
           />
-          <TextInput
-            placeholder="Email"
-            onChangeText={text => setEmail(text)}
-            value={email}
-            //style={styles.textInput}
-          />
-          <TextInput
-            placeholder="Dirección"
-            onChangeText={text => setAddress(text)}
-            value={address}
-            //style={styles.textInput}
-          />
-          <Button
-            title="Salir"
-            onPress={() => signOut()}
-          />
-          <Button
-            title="Actualizar"
-            onPress={() => updateUserInfo()}
-          />
-          {!!image && <Text>{image.uri}</Text>}
-        </ScrollView >
+        </View>     
+
+        <View style={styles.footer}>
+          <View style={styles.infoContainer}>
+            <Text style={styles.text_footer}>Email</Text>
+            <View style={styles.inputContainer}>
+              <FontAwesome 
+                  name="user-o"
+                  color="#52575D"
+                  size={20}
+              />
+              <TextInput
+                placeholder="Ingresa tu correo"
+                onChangeText={text => setEmail(text)}
+                style={styles.textInput}
+                autoCapitalize="none"
+                keyboardType="email-address"
+                value={email}
+              />
+            </View >
+          </View>
+          
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity
+              style={styles.signIn}
+              onPress={() => updateUserInfo()}
+            >
+              <LinearGradient
+                colors={['#08d4c4', '#01ab9d']}
+                style={styles.signIn}
+              >
+
+              <Text style={[styles.textSign, {
+                color:'#fff'
+              }]}>Actualizar mi perfil</Text>
+              </LinearGradient>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => signOut()}
+              style={[styles.signIn, {
+                borderColor: '#009387',
+                borderWidth: 1,
+                marginTop: 15
+              }]}
+            >
+              <Ionicons name="exit-outline" size={34} color="#009387"></Ionicons>
+              <Text style={[styles.textSign, {
+                color: '#009387'
+              }]}>Cerrar sesión</Text>
+            </TouchableOpacity>
+          </View>
+        </View>      
       </SafeAreaView>
     );
 };
 
 export default Profile;
 
+const {height, width} = Dimensions.get('window');
+
 const styles = StyleSheet.create({
   container: {
-    flex: 1, 
-    backgroundColor: "#fefefe"
+    backgroundColor: "#fefefe",
+    flex: 1,
+  },
+  imageContainer: {
+    alignSelf: 'center',
+    paddingTop: 25,
   },
   profileImage: {
     width: 200,
     height: 200,
     borderRadius: 100,
-    overflow: "hidden"
+    overflow: "hidden",
   },
   image: {
     flex: 1,
@@ -211,17 +236,62 @@ const styles = StyleSheet.create({
     height: 60,
     borderRadius: 30,
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
-  infoContainer: {
+  nameContainer: {
     alignSelf: "center",
     alignItems: "center",
-    marginTop: 16
+    marginTop: 15,
+  },
+  footer: {
+    justifyContent: 'space-between',
+    flex: 1,
+    paddingHorizontal: 20,
+    paddingVertical: 15,
+  },
+  infoContainer: {
+    paddingVertical: 10,
   },
   text: {
-    //fontFamily: "HelveticaNeue",
     color: "#52575D",
     fontWeight: "200", 
     fontSize: 36 
+  },
+  text_footer: {
+    color: '#52575D',
+    fontSize: 20,
+  },
+  inputContainer: {
+    flexDirection: 'row',
+    marginTop: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#f1f1f1',
+    paddingBottom: 5,
+  },
+  textInput: {
+    flex: 1,
+    marginTop: -2,
+    paddingLeft: 30,
+    color: '#52575D',
+    fontSize: 18,
+  },
+  buttonContainer: {
+    flex: 1,
+    justifyContent: 'space-between',
+    flexDirection: 'column',
+    alignItems: 'center',
+    marginTop: 5,
+  },
+  signIn: {
+    flexDirection: 'row',
+    width: '100%',
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+  },
+  textSign: {
+    fontSize: 18,
+    fontWeight: 'bold'
   },
 });
