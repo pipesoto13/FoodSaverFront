@@ -1,18 +1,12 @@
 import React, { useEffect, useMemo } from 'react';
 import { View, ActivityIndicator } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createStackNavigator } from '@react-navigation/stack';
-import Register from "./screens/Register";
-import Login from "./screens/Login";
-import Home from "./screens/Home";
 import { AuthContext } from './components/context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
-const Tab = createBottomTabNavigator();
-const Stack = createStackNavigator();
+import TabNavigator  from "./navigation/TabNavigator";
+import { RootStackNavigator }  from "./navigation/StackNavigator";
 
 export default function App() {
 
@@ -79,8 +73,7 @@ export default function App() {
       } catch(e) {
         console.log(e);
       }
-      // console.log('user token: ', userToken);
-      dispatch({ type: 'LOGIN', id: validUserId, token: userToken });
+      dispatch({ type: 'LOGIN', id: validUserId, token: userToken })
     },
     signOut: async() => {
       try {
@@ -105,7 +98,6 @@ export default function App() {
       } catch(e) {
         console.log(e);
       }
-      // console.log('user token: ', userToken);
       dispatch({ type: 'RETRIEVE_TOKEN', token: userToken });
     }, 1000);
   }, []);
@@ -123,42 +115,11 @@ export default function App() {
   return (
     <AuthContext.Provider value={authContext}>
       <NavigationContainer>
-      {userToken == null ? (
-        <Stack.Navigator>
-          <Tab.Screen name="Login" component={Login}/>
-          <Tab.Screen name="Registro" component={Register}/>
-        </Stack.Navigator>
-      ) : (
-        <Tab.Navigator
-          screenOptions={({ route }) => ({
-            tabBarIcon: ({ focused, color, size }) => {
-              if (route.name === 'Home') {
-                return (
-                  <Ionicons
-                    name={focused ? 'home' : 'home-outline'}
-                    size={size}
-                    color={color}
-                  />
-                );
-              } else if (route.name === 'Form') {
-                return (
-                  <Ionicons
-                    name={focused ? 'settings' : 'settings-outline'}
-                    size={size}
-                    color={color}
-                  />
-                );
-              }
-            },
-          })}
-          tabBarOptions={{
-            activeTintColor: 'tomato',
-            inactiveTintColor: 'gray',
-          }}
-        >
-          <Tab.Screen name="Home" component={Home}/>
-        </Tab.Navigator>
-      )}
+        {userToken == null ? (
+          <RootStackNavigator/>
+        ) : (      
+          <TabNavigator />
+        )}
       </NavigationContainer>
     </AuthContext.Provider>
   );

@@ -1,24 +1,38 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   View,
   Text,
   StyleSheet,
   FlatList,
   ActivityIndicator,
-  Button,
+  Image,
+  TouchableOpacity,
+  Dimensions,
 } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
 import axios from 'axios'
-import { AuthContext } from '../components/context'
+import { FontAwesome } from '@expo/vector-icons'
 
+export default function products({navigation, route}) {
 
-export default function Posts() {
-  const navigation = useNavigation()
-  const [posts, setPosts] = useState([])
+  const [products, setProducts] = useState([])
   const [error, setError] = useState(false)
   const [loading, setLoading] = useState(false)
-
-  const { signOut } = useContext(AuthContext)
+  
+/*   useEffect(() => {
+    if (route.params.product) {
+      setLoading(true)
+      axios({
+        method: 'GET',
+        baseURL: 'http://192.168.0.11:8000',
+        url: '/products'
+      })
+        .then(({ data }) => {setProducts(data)})
+        .catch((err) => {setError(true)})
+        .finally(() => setLoading(false))
+      console.log(route);
+      console.log('navigationn');
+    }
+  }, [route.params.product]); */
 
   useEffect(() => {
     setLoading(true)
@@ -27,44 +41,119 @@ export default function Posts() {
       baseURL: 'http://192.168.0.11:8000',
       url: '/products'
     })
-      .then(({ data }) => {setPosts(data)})
+      .then(({ data }) => {setProducts(data)})
       .catch((err) => {setError(true)})
       .finally(() => setLoading(false))
-  }, [])
+  }, [route])
 
   if(loading) return <ActivityIndicator />
   if(error) return <Text>Algo salió mal</Text>
   return (
-    <View>
+    <View style={{
+      flexDirection: 'column',
+      flex: 1
+    }}>
       <FlatList
-        data={posts}
+        style={styles.productsList}
+        data={products}
         renderItem={({ item }) => (
-          <View>
-            <Text style={styles.title}>{item.name}</Text>
-            <Text style={styles.title}>{item.price}</Text>
-            <Text style={styles.body}>{item.description}</Text>
-            <Button
-              title="View more"
-              onPress={() => navigation.navigate('Post', { id: item.id })}
-            />
-          </View>
+          <TouchableOpacity onPress={() => navigation.navigate('ProductDetails', { id: item.id })}>
+            <View style={styles.productsListContainer}>
+              <Image
+                style={styles.thumb}
+                source={{ uri: item.photo }}
+                />
+              <View style={styles.infoContainer}>
+                <Text style={styles.name}>{item.name}</Text>
+                <Text style={styles.price}>{item.price=='0'? 'GRATIS':`$ ${item.price}`}</Text>
+                <Text numberOfLines={2} style={styles.description}>{item.description}</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
         )}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.id.toString()}
       />
-      <Button
-        title="Salir"
-        onPress={() => signOut()}
-      />
+      <TouchableOpacity
+        style={{
+          alignSelf: 'flex-end',
+          position: 'absolute',
+          bottom: 30,
+          right: 15,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+        onPress={() => navigation.navigate('AddFood')}
+      >
+        <View
+          style={{
+            width: 60,
+            height: 60,
+            borderRadius: 30,
+            backgroundColor: '#e32f45',
+            shadowColor: "#000",
+            shadowOffset: {
+              width: 0,
+              height: 4,
+            },
+            shadowOpacity: 0.39,
+            shadowRadius: 4.65,
+            elevation: 8,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <FontAwesome name="plus" size={34} color="#fefefe" />
+        </View>
+      </TouchableOpacity>
     </View>
   )
 }
 
+const {height, width} = Dimensions.get('window');
+
 const styles = StyleSheet.create({
-  title: {
-    fontSize: 24,
-    fontWeight: '800',
+  productsList: {
+    backgroundColor: '#fefefe',
   },
-  body: {
+  productsListContainer: {
+    flexDirection: 'row',
+    backgroundColor: '#fafafa',
+    height: 120,
+    margin: 8,
+    borderRadius: 16,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.39,
+    shadowRadius: 4.65,
+    elevation: 8,
+  },
+  thumb: {
+    height: 120,
+    width: 120,
+    borderTopLeftRadius: 16,
+    borderBottomLeftRadius: 16,
+  },
+  infoContainer: {
+    flex: 1,
+    paddingHorizontal: 15,
+    paddingVertical: 1,
+    justifyContent: 'center',
+  },
+  name: {
+    fontSize: 22,
+    fontWeight: 'bold',
+  },
+  price: {
     fontSize: 16,
-  }
+    fontWeight: '600',
+    marginBottom: 5,
+  },
+  description: {
+    fontSize: 16,
+    fontWeight: '400',
+    color: '#787878',
+  },
 })
