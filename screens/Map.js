@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, View, Text, ActivityIndicator } from 'react-native'
+import { StyleSheet, View, Text, ActivityIndicator, Dimensions } from 'react-native'
 import { useRoute } from '@react-navigation/native'
 import axios from 'axios'
+import MapView from 'react-native-maps'
 
 export default function ProductDetails({navigation}) {
   const route = useRoute()
@@ -18,14 +19,21 @@ export default function ProductDetails({navigation}) {
   return (
     <View style={styles.text}>
       <Text>Mapa</Text>
+      <MapView style={styles.map} />
     </View>
   )
 }
+
+const {height, width} = Dimensions.get('window')
 
 const styles = StyleSheet.create({
   text: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  map: {
+    width: width,
+    height: height,
   },
 })

@@ -7,6 +7,7 @@ import {
   ActivityIndicator,
   Image,
   TouchableOpacity,
+  Dimensions,
 } from 'react-native'
 import axios from 'axios'
 import { FontAwesome } from '@expo/vector-icons'
@@ -64,8 +65,8 @@ export default function products({navigation, route}) {
                 />
               <View style={styles.infoContainer}>
                 <Text style={styles.name}>{item.name}</Text>
-                <Text style={styles.price}>{item.price}</Text>
-                <Text style={styles.description}>{item.description}</Text>
+                <Text style={styles.price}>{item.price=='0'? 'GRATIS':`$ ${item.price}`}</Text>
+                <Text numberOfLines={2} style={styles.description}>{item.description}</Text>
               </View>
             </View>
           </TouchableOpacity>
@@ -108,6 +109,8 @@ export default function products({navigation, route}) {
   )
 }
 
+const {height, width} = Dimensions.get('window');
+
 const styles = StyleSheet.create({
   productsList: {
     backgroundColor: '#fefefe',
@@ -134,7 +137,10 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 16,
   },
   infoContainer: {
-    padding: 15,
+    flex: 1,
+    paddingHorizontal: 15,
+    paddingVertical: 1,
+    justifyContent: 'center',
   },
   name: {
     fontSize: 22,
@@ -143,7 +149,7 @@ const styles = StyleSheet.create({
   price: {
     fontSize: 16,
     fontWeight: '600',
-    marginBottom: 8,
+    marginBottom: 5,
   },
   description: {
     fontSize: 16,

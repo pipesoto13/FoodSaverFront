@@ -9,9 +9,12 @@ import {
   SafeAreaView,
   Image,
   Dimensions,
+  ScrollView,
 } from 'react-native'
 import { useRoute } from '@react-navigation/native'
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import MapView from 'react-native-maps'
+import { LinearGradient } from 'expo-linear-gradient'
 import axios from 'axios'
 import jwt_decode from "jwt-decode"
 
@@ -61,6 +64,7 @@ export default function ProductDetails() {
   if(error) return <Text>Something went wrong</Text>
   return (
     <SafeAreaView style={styles.container}>
+      <ScrollView showsVerticalScrollIndicator={false}>
       {!!product && (
         <Image
           style={styles.foodImage}
@@ -78,13 +82,25 @@ export default function ProductDetails() {
         <View>
           <Text style={styles.location}>Ubicación aproximada</Text>
           <Text style={styles.description}>{!!product && product.address}</Text>
-          <Button
-            onPress={requestProduct}
-            title="Solicitar Producto"
-            color="#841584"
-          />
+          <View style={styles.mapContainer}>
+            <MapView style={styles.map} />
+          </View>
+            <TouchableOpacity
+              style={styles.signIn}
+              onPress={requestProduct}
+            >
+              <LinearGradient
+                colors={['#08d4c4', '#01ab9d']}
+                style={styles.signIn}
+              >
+              <Text style={[styles.textSign, {
+                color:'#fff'
+              }]}>Solicitar Producto</Text>
+              </LinearGradient>
+            </TouchableOpacity>
         </View>
       </View>
+      </ScrollView>
     </SafeAreaView>
   )
 }
@@ -130,5 +146,28 @@ const styles = StyleSheet.create({
   location: {
     fontWeight: 'bold',
     fontSize: 18,
+  },
+  mapContainer: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  map: {
+    width: width,
+    height: 300,
+  },
+  signIn: {
+    marginTop: 10,
+    flexDirection: 'row',
+    width: '100%',
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+  },
+  textSign: {
+    fontSize: 18,
+    fontWeight: 'bold'
   },
 })
