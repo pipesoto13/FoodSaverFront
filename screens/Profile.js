@@ -212,6 +212,7 @@ const styles = StyleSheet.create({
     paddingTop: 25,
   },
   profileImage: {
+    backgroundColor: '#e2e2e2',
     width: 200,
     height: 200,
     borderRadius: 100,

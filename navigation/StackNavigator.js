@@ -29,10 +29,10 @@ const MainStackNavigator = () => {
       <Stack.Screen 
         name="Home" 
         component={Home}
-        //options={{ headerShown: false }} 
+        options={{ title: 'Inicio' }} 
       />
-      <Stack.Screen name="ProductDetails" component={ProductDetails} />
-      <Stack.Screen name="AddFood" component={AddFood} />
+      <Stack.Screen name="ProductDetails" component={ProductDetails} options={{ title: 'Detalles del producto' }}/>
+      <Stack.Screen name="AddFood" component={AddFood} options={{ title: 'Adicionar producto' }}/>
     </Stack.Navigator>
   );
 };
@@ -43,6 +43,7 @@ const MapStackNavigator = () => {
       <Stack.Screen 
         name="Map" 
         component={Map}
+        options={{ title: 'Mapa de productos' }} 
       />
     </Stack.Navigator>
   );
@@ -54,6 +55,7 @@ const ProfileStackNavigator = () => {
       <Stack.Screen 
         name="Perfil" 
         component={Profile}
+        options={{ title: 'Perfil de usuario' }} 
       />
     </Stack.Navigator>
   );
