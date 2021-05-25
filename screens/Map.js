@@ -20,10 +20,10 @@ export default function ProductDetails() {
         return;
       }
 
-      let location = await Location.getCurrentPositionAsync({
+      /* let location = await Location.getCurrentPositionAsync({
         accuracy: 1,
       });
-      setLocation(location);
+      setLocation(location); */
     })();
   }, []);
 

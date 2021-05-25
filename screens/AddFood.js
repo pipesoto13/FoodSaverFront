@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { StyleSheet, View, Text, ActivityIndicator, TextInput, Image, Alert, ScrollView, SafeAreaView, TouchableOpacity, Dimensions, } from 'react-native'
+import { StyleSheet, View, Text, Button, Platform, ActivityIndicator, TextInput, Image, Alert, ScrollView, SafeAreaView, TouchableOpacity, Dimensions, } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
 import jwt_decode from "jwt-decode"
@@ -8,11 +8,15 @@ import mime from "mime";
 import { Ionicons } from "@expo/vector-icons"
 import { LinearGradient } from 'expo-linear-gradient'
 import MapView, { Marker } from 'react-native-maps'
-
+import DateTimePicker from '@react-native-community/datetimepicker'
 
 export default function ProductDetails({navigation, route}) {
 
   const [image, setImage] = useState(null)
+
+  const [date, setDate] = useState(new Date());
+  const [mode, setMode] = useState('date');
+  const [show, setShow] = useState(false);
   
   const [profilePhoto, setprofilePhoto] = useState(null)
   const [name, setName] = useState('')
@@ -24,6 +28,22 @@ export default function ProductDetails({navigation, route}) {
   const [loading, setLoading] = useState(false)
   const [lat, setLat] = useState(6.2599091)
   const [long, setLong] = useState(-75.6091692)
+
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setShow(Platform.OS === 'ios');
+    setDate(currentDate);
+    setExpDate(currentDate.toISOString().substr(0,10))
+  };
+
+  const showMode = (currentMode) => {
+    setShow(true);
+    setMode(currentMode);
+  };
+
+  const showDatepicker = () => {
+    showMode('date');
+  };
 
   const registerAlert = () => 
   Alert.alert(
@@ -144,6 +164,7 @@ export default function ProductDetails({navigation, route}) {
               placeholder="ej. 4 panes, traer bolsa para recogerlos"
               onChangeText={text => setDescription(text)}
               style={styles.textInput}
+              multiline={true}
               value={description}
             />
           </View>
@@ -160,12 +181,31 @@ export default function ProductDetails({navigation, route}) {
 
           <Text style={styles.text_footer}>Fecha caducidad</Text>
           <View style={styles.inputContainer}>
+            <TouchableOpacity onPress={showDatepicker}>
+              <Ionicons name="calendar-outline" size={34} color="#555"></Ionicons>
+            </TouchableOpacity>
             <TextInput
               placeholder="2021-07-23"
               onChangeText={text => setExpDate(text)}
               value={expDate}
               style={styles.textInput}
+              editable={false}
             />
+          </View>
+
+          <View>
+            {show && (
+              <DateTimePicker
+                testID="dateTimePicker"
+                value={date}
+                mode={mode}
+                is24Hour={true}
+                locale="es-ES"
+                display="default"
+                dateFormat="dayofweek day month" 
+                onChange={onChange}
+              />
+            )}
           </View>
 
           <Text style={styles.text_footer}>Direccion de recolección</Text>
