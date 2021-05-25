@@ -13,7 +13,7 @@ import {
 } from 'react-native'
 import { useRoute } from '@react-navigation/native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import MapView from 'react-native-maps'
+import MapView, { Marker } from 'react-native-maps'
 import { LinearGradient } from 'expo-linear-gradient'
 import axios from 'axios'
 import jwt_decode from "jwt-decode"
@@ -83,7 +83,27 @@ export default function ProductDetails() {
           <Text style={styles.location}>Ubicación aproximada</Text>
           <Text style={styles.description}>{!!product && product.address}</Text>
           <View style={styles.mapContainer}>
-            <MapView style={styles.map} />
+            {!!product &&
+              <MapView 
+                style={styles.map}
+                initialRegion={{
+                  latitude: product.latLoc,
+                  longitude: product.longLoc,
+                  latitudeDelta: 0.0922,
+                  longitudeDelta: 0.0421,
+                }}
+              >
+                {!!product && 
+                  <Marker
+                  coordinate={{
+                    latitude: product.latLoc,
+                    longitude: product.longLoc,
+                  }}
+                  title={product.name}
+                  />
+                }
+              </MapView>
+            }
           </View>
             <TouchableOpacity
               style={styles.signIn}

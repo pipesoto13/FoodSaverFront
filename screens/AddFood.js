@@ -62,6 +62,7 @@ export default function ProductDetails({navigation, route}) {
     dataFood.append('expDate', expDate);
     dataFood.append('latLoc', lat);
     dataFood.append('longLoc', long);
+    dataFood.append('sellerId', sellerId);
     if (image) {
       dataFood.append('photo', {
         uri: image.uri,
