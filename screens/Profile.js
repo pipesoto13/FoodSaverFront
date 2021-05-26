@@ -179,9 +179,16 @@ const Profile = ({route, navigation}) => {
               }]}>Actualizar mi perfil</Text>
               </LinearGradient>
             </TouchableOpacity>
-            <View>
-              <Text onPress={() => navigation.navigate('MyProducts') }>Mis productos</Text>
-            </View>
+            <TouchableOpacity style={{alignSelf: 'flex-start'}}>
+              <View>
+                <Text 
+                  onPress={() => navigation.navigate('MyProducts') }
+                  style={[styles.textSign, {
+                    color: '#49274A',
+                  }]}
+                >Mis productos</Text>
+              </View>
+            </TouchableOpacity>
             <TouchableOpacity
               onPress={() => signOut()}
               style={[styles.signIn, {

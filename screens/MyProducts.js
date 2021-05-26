@@ -76,7 +76,7 @@ export default function products({navigation, route}) {
         data={products}
         renderItem={({ item }) => (
           <View>
-            <TouchableOpacity onPress={() => navigation.navigate('ProductDetails', { id: item.id })}>
+            <TouchableOpacity onPress={() => navigation.navigate('UpdateProduct', { id: item.id })}>
               <View style={styles.productsListContainer}>
                 <Image
                   style={[styles.thumb, {opacity: !item.requested ? 1 : 0.2}]}
