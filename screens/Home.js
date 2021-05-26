@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useFocusEffect } from '@react-navigation/native'
 import {
   View,
   Text,
@@ -18,17 +19,19 @@ export default function products({navigation, route}) {
   const [error, setError] = useState(false)
   const [loading, setLoading] = useState(false)
 
-  useEffect(() => {
-    setLoading(true)
-    axios({
-      method: 'GET',
-      baseURL: 'http://192.168.0.11:8000',
-      url: '/products'
-    })
-      .then(({ data }) => {setProducts(data)})
-      .catch((err) => {setError(true)})
-      .finally(() => setLoading(false))
-  }, [route])
+  useFocusEffect(
+    React.useCallback(() => {
+      setLoading(true)
+      axios({
+        method: 'GET',
+        baseURL: 'http://192.168.0.11:8000',
+        url: '/products'
+      })
+        .then(({ data }) => {setProducts(data)})
+        .catch((err) => {setError(true)})
+        .finally(() => setLoading(false))
+    }, [])
+  );
 
   if(loading) return <ActivityIndicator />
   if(error) return <Text>Algo salió mal</Text>

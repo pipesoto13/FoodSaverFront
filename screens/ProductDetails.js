@@ -79,11 +79,7 @@ export default function ProductDetails({navigation}) {
       console.log(e);
       setError(true)
     }
-    navigation.navigate({
-      name: 'Home',
-      params: { product: product.name },
-      merge: true,
-    });
+    navigation.navigate('Home');
   }
 
   if(loading) return <ActivityIndicator />

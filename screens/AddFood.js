@@ -107,11 +107,7 @@ export default function ProductDetails({navigation, route}) {
     } catch(e) {
       console.log(e);
     }
-    navigation.navigate({
-      name: 'Home',
-      params: { product: name },
-      merge: true,
-    });
+    navigation.navigate('Home');
   }
 
   const handleDragEnd = (e) => {
@@ -174,6 +170,7 @@ export default function ProductDetails({navigation, route}) {
             <TextInput
               placeholder="Ingresa 0 si deseas donarlo"
               onChangeText={text => setPrice(text)}
+              keyboardType="numeric"
               value={price}
               style={styles.textInput}
             />
