@@ -260,13 +260,13 @@ const styles = StyleSheet.create({
   },
   text_footer: {
     color: '#52575D',
-    fontSize: 20,
+    fontSize: 18,
   },
   inputContainer: {
     flexDirection: 'row',
     marginTop: 10,
     borderBottomWidth: 1,
-    borderBottomColor: '#f1f1f1',
+    borderBottomColor: '#94618E',
     paddingBottom: 5,
   },
   textInput: {
@@ -274,7 +274,7 @@ const styles = StyleSheet.create({
     marginTop: -2,
     paddingLeft: 30,
     color: '#52575D',
-    fontSize: 18,
+    fontSize: 16,
   },
   buttonContainer: {
     flex: 1,

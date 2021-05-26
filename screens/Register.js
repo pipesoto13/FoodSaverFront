@@ -267,7 +267,7 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       marginTop: 10,
       borderBottomWidth: 1,
-      borderBottomColor: '#f2f2f2',
+      borderBottomColor: '#94618E',
       paddingBottom: 5
   },
   textInput: {
