@@ -72,14 +72,13 @@ export default function ProductDetails({navigation}) {
           productId: [product.id],
         }
       });
-      console.log('producto solicitado');
       updateProductRequest(clientId)
       setLoading(false)
     } catch (e) {
       console.log(e);
       setError(true)
     }
-    navigation.navigate('Home');
+    navigation.navigate('Home')
   }
 
   if(loading) return <ActivityIndicator />

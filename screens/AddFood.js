@@ -103,11 +103,10 @@ export default function ProductDetails({navigation, route}) {
         })
         registerAlert()
       }
-      console.log(`Adicionado: ${name}, ${description}, con costo ${price}, y fecha ${expDate}`);
     } catch(e) {
       console.log(e);
     }
-    navigation.navigate('Home');
+    navigation.navigate('Home')
   }
 
   const handleDragEnd = (e) => {
