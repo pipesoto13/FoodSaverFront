@@ -20,6 +20,10 @@ function Register({navigation}) {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [checkName, setCheckName] = useState(false)
+  const [checkEmail, setCheckEmail] = useState(false)
+  const [passwordAlert, setPasswordAlert] = useState(false)
 
   const registerAlert = () => 
     Alert.alert(
@@ -30,8 +34,41 @@ function Register({navigation}) {
       ]
     );
   
-
+  const handleOnChangeName = (text) => {
+    if( text.length !== 0 ) {
+      setName(text)
+      setCheckName(true);
+    } else {
+      setName(text)
+      setCheckName(false);
+    }
+  }    
+  
+  const handleOnChangeEmail = (text) => {
+    if( text.length !== 0 ) {
+      setEmail(text)
+      setCheckEmail(true);
+    } else {
+      setEmail(text)
+      setCheckEmail(false);
+    }
+  }    
+  
+  const handleOnChangePassword = (text) => {
+    setPassword(text)
+    setPasswordAlert(false)  
+  }    
+  
+  const handleOnChangeConfirmPassword = (text) => {
+    setConfirmPassword(text)  
+    setPasswordAlert(false)  
+  }    
+  
   async function handleSubmit() {
+    if (password !== confirmPassword ) {
+      setPasswordAlert(true)
+      return
+    }
     try {
       const { data } = await axios({
         method: 'POST',
@@ -42,12 +79,13 @@ function Register({navigation}) {
           email,
           password,
         }
-    })
-    registerAlert()
-    navigation.goBack()
+      })
+      registerAlert()
+      navigation.goBack()
     } catch(e) {
       console.log(e);
     }
+    setPasswordAlert(false)
   }
 
   return (
@@ -70,10 +108,21 @@ function Register({navigation}) {
           />
           <TextInput
             placeholder="Ingresa tu nombre"
-            onChangeText={text => setName(text)}
+            onChangeText={text => handleOnChangeName(text)}
             style={styles.textInput}
             value={name}
           />
+          {checkName ? 
+            <Animatable.View
+              animation="bounceIn"
+            >
+              <Feather 
+                name="check-circle"
+                color="green"
+                size={20}
+              />
+            </Animatable.View>
+          : null}
         </View>
 
         <Text style={[styles.text_footer, {
@@ -87,32 +136,68 @@ function Register({navigation}) {
           />
           <TextInput
             placeholder="Ingresa tu correo"
-            onChangeText={text => setEmail(text)}
+            onChangeText={text => handleOnChangeEmail(text)}
             style={styles.textInput}
             autoCapitalize="none"
             keyboardType="email-address"
             value={email}
           />
+          {checkEmail ? 
+            <Animatable.View
+              animation="bounceIn"
+            >
+              <Feather 
+                name="check-circle"
+                color="green"
+                size={20}
+              />
+            </Animatable.View>
+          : null}
         </View>
 
         <Text style={[styles.text_footer, {
             marginTop: 35,
           }]}>Contraseña</Text>
-          <View style={styles.action}>
-            <Feather 
-              name="lock"
-              color="#05375a"
-              size={20}
-            />
-            <TextInput
-              placeholder="Ingresa tu contraseña"
-              onChangeText={text => setPassword(text)}
-              secureTextEntry
-              style={styles.textInput}
-              autoCapitalize="none"
-              value={password}
-            />
-          </View>
+        <View style={styles.action}>
+          <Feather 
+            name="lock"
+            color="#05375a"
+            size={20}
+          />
+          <TextInput
+            placeholder="Ingresa tu contraseña"
+            onChangeText={text => handleOnChangePassword(text)}
+            secureTextEntry
+            style={styles.textInput}
+            autoCapitalize="none"
+            value={password}
+          />
+        </View>
+
+        <Text style={[styles.text_footer, {
+            marginTop: 35,
+          }]}>Confirmar Contraseña</Text>
+        <View style={styles.action}>
+          <Feather 
+            name="lock"
+            color="#05375a"
+            size={20}
+          />
+          <TextInput
+            placeholder="Ingresa tu contraseña"
+            onChangeText={text => handleOnChangeConfirmPassword(text)}
+            secureTextEntry
+            style={styles.textInput}
+            autoCapitalize="none"
+            value={confirmPassword}
+          />
+        </View>
+
+        {passwordAlert && <Text style={[styles.text_footer, {
+          marginTop: 15,
+          fontSize: 14,
+          color: 'red',
+        }]}>Las contraseñas no coinciden</Text>}
 
         <View style={styles.button}>
           <TouchableOpacity
@@ -190,6 +275,7 @@ const styles = StyleSheet.create({
       marginTop: Platform.OS === 'ios' ? 0 : -12,
       paddingLeft: 10,
       color: '#05375a',
+      fontSize: 16,
   },
   button: {
       alignItems: 'center',

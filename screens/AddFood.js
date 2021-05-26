@@ -208,7 +208,7 @@ export default function ProductDetails({navigation, route}) {
             )}
           </View>
 
-          <Text style={styles.text_footer}>Direccion de recolección</Text>
+          <Text style={styles.text_footer}>Direccion e información de recolección</Text>
           <View style={styles.inputContainer}>
             <TextInput
               placeholder="Calle 65, apto 303..."

@@ -80,7 +80,7 @@ export default function ProductDetails() {
           <Text style={styles.expDate}>{!!product && product.expDate}</Text>
         </View>
         <View>
-          <Text style={styles.location}>Ubicación aproximada</Text>
+          <Text style={styles.location}>Información y Ubicación aproximada</Text>
           <Text style={styles.description}>{!!product && product.address}</Text>
           <View style={styles.mapContainer}>
             {!!product &&
