@@ -18,7 +18,7 @@ import { LinearGradient } from 'expo-linear-gradient'
 import axios from 'axios'
 import jwt_decode from "jwt-decode"
 
-export default function ProductDetails() {
+export default function ProductDetails({navigation}) {
   const route = useRoute()
 
   const [product, setProduct] = useState(null)
@@ -37,6 +37,26 @@ export default function ProductDetails() {
       .finally(() => setLoading(false))
   }, [])
 
+  const updateProductRequest = async (userId) => {
+    const dataFood = new FormData();
+    dataFood.append('requested', true);
+    try {
+      if (userId !== null) {
+        const { data } = await axios({
+          method: 'PUT',
+          baseURL: 'http://192.168.0.11:8000',
+          url: `/products/${route.params.id}`,
+          data: dataFood,
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          }
+        })
+      }
+    } catch(e) {
+      console.log(e);
+    }
+  }
+
   const requestProduct = async () => {
     const userToken = await AsyncStorage.getItem('userToken');
     const userTokenDecoded = jwt_decode(userToken)
@@ -53,11 +73,17 @@ export default function ProductDetails() {
         }
       });
       console.log('producto solicitado');
+      updateProductRequest(clientId)
       setLoading(false)
     } catch (e) {
       console.log(e);
       setError(true)
     }
+    navigation.navigate({
+      name: 'Home',
+      params: { product: product.name },
+      merge: true,
+    });
   }
 
   if(loading) return <ActivityIndicator />

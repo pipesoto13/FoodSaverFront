@@ -44,10 +44,11 @@ export default function products({navigation, route}) {
           <TouchableOpacity onPress={() => navigation.navigate('ProductDetails', { id: item.id })}>
             <View style={styles.productsListContainer}>
               <Image
-                style={styles.thumb}
+                style={[styles.thumb, {opacity: !item.requested ? 1 : 0.2}]}
                 source={{ uri: item.photo }}
-                />
-              <View style={styles.infoContainer}>
+              />
+              {!!item.requested && <Text style={styles.requested}>Producto Solicitado</Text>}
+              <View style={[styles.infoContainer, {opacity: !item.requested ? 1 : 0.2}]}>
                 <Text style={styles.name}>{item.name}</Text>
                 <Text style={styles.price}>{item.price=='0'? 'GRATIS':`$ ${item.price}`}</Text>
                 <Text numberOfLines={2} style={styles.description}>{item.description}</Text>
@@ -140,4 +141,20 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     color: '#787878',
   },
+  requested: {
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 5,
+    top: 25,
+    left: 6,
+    width: 110,
+    height: 61,
+    padding: 6,
+    textAlign: 'center',
+    fontSize: 20,
+    fontWeight: 'bold',
+    backgroundColor: '#49274A',
+    color: '#fefefe',
+  }
 })
