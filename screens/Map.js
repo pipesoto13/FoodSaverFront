@@ -5,7 +5,7 @@ import axios from 'axios'
 import MapView, { Marker } from 'react-native-maps'
 import * as Location from 'expo-location'
 
-export default function ProductDetails() {
+export default function ProductDetails({navigation}) {
 
   const [error, setError] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -55,6 +55,7 @@ export default function ProductDetails() {
         }}
       >
         {!!products && products.map((product) => (
+          
           <Marker
             key={product.id}
             coordinate={{
@@ -62,7 +63,12 @@ export default function ProductDetails() {
               longitude: product.longLoc,
             }}
             title={product.name}
-          />
+            onCalloutPress={() => navigation.navigate('ProductDetails', { id: product.id })}
+          >
+            <View>
+              <Text numberOfLines={1} style={styles.marker}>{product.name}</Text>
+            </View>
+          </Marker>
         ))}
       </MapView>
     </View>
@@ -81,4 +87,11 @@ const styles = StyleSheet.create({
     width: width,
     height: height,
   },
+  marker: {
+    color: '#fefefe',
+    backgroundColor: '#49274A',
+    padding: 5,
+    borderRadius: 10,
+    maxWidth: 60,
+  }
 })

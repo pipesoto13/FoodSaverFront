@@ -45,6 +45,7 @@ const MapStackNavigator = () => {
         component={Map}
         options={{ title: 'Mapa de productos' }} 
       />
+      <Stack.Screen name="ProductDetails" component={ProductDetails} options={{ title: 'Detalles del producto' }}/>
     </Stack.Navigator>
   );
 };
