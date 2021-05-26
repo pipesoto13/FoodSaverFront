@@ -17,22 +17,6 @@ export default function products({navigation, route}) {
   const [products, setProducts] = useState([])
   const [error, setError] = useState(false)
   const [loading, setLoading] = useState(false)
-  
-/*   useEffect(() => {
-    if (route.params.product) {
-      setLoading(true)
-      axios({
-        method: 'GET',
-        baseURL: 'http://192.168.0.11:8000',
-        url: '/products'
-      })
-        .then(({ data }) => {setProducts(data)})
-        .catch((err) => {setError(true)})
-        .finally(() => setLoading(false))
-      console.log(route);
-      console.log('navigationn');
-    }
-  }, [route.params.product]); */
 
   useEffect(() => {
     setLoading(true)
@@ -89,7 +73,7 @@ export default function products({navigation, route}) {
             width: 60,
             height: 60,
             borderRadius: 30,
-            backgroundColor: '#e32f45',
+            backgroundColor: '#49274A',
             shadowColor: "#000",
             shadowOffset: {
               width: 0,
@@ -113,11 +97,11 @@ const {height, width} = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   productsList: {
-    backgroundColor: '#fefefe',
+    backgroundColor: '#F8EEE7',
   },
   productsListContainer: {
     flexDirection: 'row',
-    backgroundColor: '#fafafa',
+    backgroundColor: '#F4DECB',
     height: 120,
     margin: 8,
     borderRadius: 16,

@@ -110,11 +110,11 @@ export default function ProductDetails() {
               onPress={requestProduct}
             >
               <LinearGradient
-                colors={['#08d4c4', '#01ab9d']}
+                colors={['#94618E', '#49274A']}
                 style={styles.signIn}
               >
               <Text style={[styles.textSign, {
-                color:'#fff'
+                color:'#fefefe'
               }]}>Solicitar Producto</Text>
               </LinearGradient>
             </TouchableOpacity>
@@ -129,7 +129,7 @@ const {height, width} = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#fefefe",
+    backgroundColor: "#F8EEE7",
     flex: 1,
   },
   imageContainer: {

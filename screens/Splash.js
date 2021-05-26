@@ -17,7 +17,7 @@ const SplashScreen = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-        <StatusBar backgroundColor='#009387' barStyle="light-content"/>
+        <StatusBar backgroundColor='#94618E' barStyle="light-content"/>
       <View style={styles.header}>
         <Animatable.Image 
           animation="bounceIn"
@@ -36,18 +36,17 @@ const SplashScreen = ({navigation}) => {
         >
           Salva comida mientras ayudas al planeta!
         </Text>
-        <Text style={styles.text}>Inicia sesión con una cuenta</Text>
         <View style={styles.button}>
           <TouchableOpacity onPress={()=>navigation.navigate('Login')}>
             <LinearGradient
-              colors={['#08d4c4', '#01ab9d']}
+              colors={['#94618E', '#49274A']}
               style={styles.signIn}
             >
               <Text style={styles.textSign}>Comienza</Text>
               <MaterialIcons 
                 name="navigate-next"
-                color="#fff"
-                size={20}
+                color="#fefefe"
+                size={25}
               />
             </LinearGradient>
           </TouchableOpacity>
@@ -65,7 +64,7 @@ const height_logo = height * 0.40;
 const styles = StyleSheet.create({
   container: {
     flex: 1, 
-    backgroundColor: '#009387'
+    backgroundColor: '#94618E'
   },
   header: {
       flex: 2,
@@ -74,7 +73,7 @@ const styles = StyleSheet.create({
   },
   footer: {
       flex: 1,
-      backgroundColor: '#fff',
+      backgroundColor: '#F8EEE7',
       borderTopLeftRadius: 30,
       borderTopRightRadius: 30,
       paddingVertical: 50,
@@ -107,6 +106,7 @@ const styles = StyleSheet.create({
   },
   textSign: {
       color: 'white',
-      fontWeight: 'bold'
+      fontWeight: 'bold',
+      fontSize: 16,
   }
 });

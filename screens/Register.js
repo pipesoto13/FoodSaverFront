@@ -90,7 +90,7 @@ function Register({navigation}) {
 
   return (
     <View style={styles.container}>
-      <StatusBar backgroundColor='#009387' barStyle="light-content"/>
+      <StatusBar backgroundColor='#94618E' barStyle="light-content"/>
         <View style={styles.header}>
           <Text style={styles.text_header}>Registrate ahora!</Text>
         </View>
@@ -205,12 +205,12 @@ function Register({navigation}) {
             onPress={handleSubmit}
           >
             <LinearGradient
-              colors={['#08d4c4', '#01ab9d']}
+              colors={['#94618E', '#49274A']}
               style={styles.signIn}
             >
 
             <Text style={[styles.textSign, {
-              color:'#fff'
+              color:'#fefefe'
             }]}>Registrase</Text>
             </LinearGradient>
           </TouchableOpacity>
@@ -218,13 +218,13 @@ function Register({navigation}) {
           <TouchableOpacity
             onPress={() => navigation.goBack()}
             style={[styles.signIn, {
-              borderColor: '#009387',
+              borderColor: '#49274A',
               borderWidth: 1,
               marginTop: 15
             }]}
           >
             <Text style={[styles.textSign, {
-              color: '#009387'
+              color: '#49274A'
             }]}>Login</Text>
           </TouchableOpacity>
         </View>
@@ -238,7 +238,7 @@ export default Register
 const styles = StyleSheet.create({
   container: {
     flex: 1, 
-    backgroundColor: '#009387'
+    backgroundColor: '#94618E'
   },
   header: {
       flex: 1,
@@ -248,7 +248,7 @@ const styles = StyleSheet.create({
   },
   footer: {
       flex: Platform.OS === 'ios' ? 3 : 5,
-      backgroundColor: '#fff',
+      backgroundColor: '#F8EEE7',
       borderTopLeftRadius: 30,
       borderTopRightRadius: 30,
       paddingHorizontal: 20,

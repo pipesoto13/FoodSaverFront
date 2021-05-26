@@ -246,7 +246,7 @@ export default function ProductDetails({navigation, route}) {
               onPress={addFood}
             >
               <LinearGradient
-                colors={['#08d4c4', '#01ab9d']}
+                colors={['#94618E', '#49274A']}
                 style={styles.signIn}
               >
               <Text style={[styles.textSign, {
@@ -267,7 +267,7 @@ const {height, width} = Dimensions.get('window');
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fefefe",
+    backgroundColor: "#F8EEE7",
     justifyContent: 'center',
   },
   imageContainer: {

@@ -170,7 +170,7 @@ const Profile = ({route, navigation}) => {
               onPress={() => updateUserInfo()}
             >
               <LinearGradient
-                colors={['#08d4c4', '#01ab9d']}
+                colors={['#94618E', '#49274A']}
                 style={styles.signIn}
               >
 
@@ -182,14 +182,14 @@ const Profile = ({route, navigation}) => {
             <TouchableOpacity
               onPress={() => signOut()}
               style={[styles.signIn, {
-                borderColor: '#009387',
+                borderColor: '#49274A',
                 borderWidth: 1,
                 marginTop: 15
               }]}
             >
-              <Ionicons name="exit-outline" size={34} color="#009387"></Ionicons>
+              <Ionicons name="exit-outline" size={34} color="#49274A"></Ionicons>
               <Text style={[styles.textSign, {
-                color: '#009387'
+                color: '#49274A'
               }]}>Cerrar sesión</Text>
             </TouchableOpacity>
           </View>
@@ -204,7 +204,7 @@ const {height, width} = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#fefefe",
+    backgroundColor: "#F8EEE7",
     flex: 1,
   },
   imageContainer: {

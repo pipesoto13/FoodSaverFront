@@ -11,16 +11,21 @@ const BottomTabNavigator = () => {
   return (
     <Tab.Navigator
       initialRouteName="Home"
-      activeColor="tomato"
+      tabBarOptions={{
+        activeTintColor: '#fefefe',
+        inactiveTintColor: '#49274A',
+        activeBackgroundColor: '#94618E',
+        inactiveBackgroundColor: '#94618E',
+      }}
     >
       <Tab.Screen 
         name="Inicio" 
         component={MainStackNavigator} 
         options={{
-          tabBarColor: '#009387',
+          tabBarColor: '#94618E',
           tabBarIcon: ({ color }) => (
             <Ionicons
-              name='home'//{focused ? 'home' : 'home-outline'}
+              name='home'
               size={26}
               color={color}
             />
@@ -31,10 +36,10 @@ const BottomTabNavigator = () => {
         name="Mapa" 
         component={MapStackNavigator}
         options={{
-          tabBarColor: '#009387',
+          tabBarColor: '#94618E',
           tabBarIcon: ({ color }) => (
             <Ionicons
-              name='map'//{focused ? 'settings' : 'settings-outline'}
+              name='map'
               size={26}
               color={color}
             />
@@ -45,10 +50,10 @@ const BottomTabNavigator = () => {
         name="Perfil" 
         component={ProfileStackNavigator}
         options={{
-          tabBarColor: '#009387',
+          tabBarColor: '#94618E',
           tabBarIcon: ({ color }) => (
             <Ionicons
-              name='person'//{focused ? 'settings' : 'settings-outline'}
+              name='person'
               size={26}
               color={color}
             />

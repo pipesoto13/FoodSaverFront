@@ -21,7 +21,7 @@ function Login({navigation}) {
 
   return (
     <View style={styles.container}>
-      <StatusBar backgroundColor='#009387' barStyle="light-content"/>
+      <StatusBar backgroundColor='#94618E' barStyle="light-content"/>
         <View style={styles.header}>
             <Text style={styles.text_header}>Bienvenido!</Text>
         </View>
@@ -71,7 +71,7 @@ function Login({navigation}) {
             onPress={() => signIn(email, password)}
           >
             <LinearGradient
-                  colors={['#08d4c4', '#01ab9d']}
+                  colors={['#94618E', '#49274A']}
                   style={styles.signIn}
             >
               <Text style={[styles.textSign, {
@@ -83,13 +83,13 @@ function Login({navigation}) {
           <TouchableOpacity
             onPress={() => navigation.navigate('Registro')}
             style={[styles.signIn, {
-                borderColor: '#009387',
+                borderColor: '#49274A',
                 borderWidth: 1,
                 marginTop: 15
             }]}
           >
             <Text style={[styles.textSign, {
-                color: '#009387'
+                color: '#49274A'
             }]}>Registrase</Text>
           </TouchableOpacity>
         </View>
@@ -103,7 +103,7 @@ export default Login
 const styles = StyleSheet.create({
   container: {
     flex: 1, 
-    backgroundColor: '#009387'
+    backgroundColor: '#94618E'
   },
   header: {
       flex: 1,
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
   },
   footer: {
       flex: 3,
-      backgroundColor: '#fff',
+      backgroundColor: '#F8EEE7',
       borderTopLeftRadius: 30,
       borderTopRightRadius: 30,
       paddingHorizontal: 20,
@@ -147,6 +147,7 @@ const styles = StyleSheet.create({
       marginTop: Platform.OS === 'ios' ? 0 : -12,
       paddingLeft: 10,
       color: '#05375a',
+      fontSize: 16,
   },
   errorMsg: {
       color: '#FF0000',
@@ -165,6 +166,6 @@ const styles = StyleSheet.create({
   },
   textSign: {
       fontSize: 18,
-      fontWeight: 'bold'
+      fontWeight: 'bold',
   }
 });
