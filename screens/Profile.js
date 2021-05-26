@@ -179,6 +179,9 @@ const Profile = ({route, navigation}) => {
               }]}>Actualizar mi perfil</Text>
               </LinearGradient>
             </TouchableOpacity>
+            <View>
+              <Text onPress={() => navigation.navigate('MyProducts') }>Mis productos</Text>
+            </View>
             <TouchableOpacity
               onPress={() => signOut()}
               style={[styles.signIn, {

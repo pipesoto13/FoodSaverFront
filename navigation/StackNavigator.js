@@ -9,6 +9,7 @@ import Login from "../screens/Login";
 import Splash from "../screens/Splash";
 import Profile from "../screens/Profile";
 import AddFood from "../screens/AddFood";
+import MyProducts from "../screens/MyProducts";
 
 const Stack = createStackNavigator();
 
@@ -58,6 +59,8 @@ const ProfileStackNavigator = () => {
         component={Profile}
         options={{ title: 'Perfil de usuario' }} 
       />
+      <Stack.Screen name="MyProducts" component={MyProducts} options={{ title: 'Mis productos' }}/>
+      <Stack.Screen name="ProductDetails" component={ProductDetails} options={{ title: 'Detalles del producto' }}/>
     </Stack.Navigator>
   );
 };
