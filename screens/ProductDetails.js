@@ -127,9 +127,9 @@ export default function ProductDetails({navigation}) {
               </MapView>
             }
           </View>
-            <TouchableOpacity
+            {!!product && <TouchableOpacity
               style={styles.signIn}
-              onPress={requestProduct}
+              onPress={!!product.requested ? null : requestProduct}
             >
               <LinearGradient
                 colors={['#94618E', '#49274A']}
@@ -137,9 +137,9 @@ export default function ProductDetails({navigation}) {
               >
               <Text style={[styles.textSign, {
                 color:'#fefefe'
-              }]}>Solicitar Producto</Text>
+              }]}>{!!product.requested ? 'El Producto ya fué SOLICITADO' : 'Solicitar Producto'}</Text>
               </LinearGradient>
-            </TouchableOpacity>
+            </TouchableOpacity>}
         </View>
       </View>
       </ScrollView>
