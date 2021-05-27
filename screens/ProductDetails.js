@@ -69,6 +69,7 @@ export default function ProductDetails({navigation}) {
         url: '/orders',
         data: {
           clientId,
+          ProductId: product.id,
           productId: [product.id],
         }
       });

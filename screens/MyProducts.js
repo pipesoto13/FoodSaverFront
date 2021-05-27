@@ -46,6 +46,11 @@ export default function products({navigation, route}) {
     console.log(`borrado el item ${itemId}`)
     try {
       if (itemId) {
+        await axios({
+          method: 'DELETE',
+          baseURL: 'http://192.168.0.11:8000',
+          url: `/orders/byProduct/${itemId}`,
+        })
         const { data } = await axios({
           method: 'DELETE',
           baseURL: 'http://192.168.0.11:8000',
