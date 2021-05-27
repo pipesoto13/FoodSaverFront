@@ -11,6 +11,7 @@ import Profile from "../screens/Profile";
 import AddFood from "../screens/AddFood";
 import MyProducts from "../screens/MyProducts";
 import UpdateProduct from "../screens/UpdateProduct";
+import MyRequested from "../screens/MyRequested";
 
 const Stack = createStackNavigator();
 
@@ -63,6 +64,7 @@ const ProfileStackNavigator = () => {
       <Stack.Screen name="MyProducts" component={MyProducts} options={{ title: 'Mis productos' }}/>
       <Stack.Screen name="ProductDetails" component={ProductDetails} options={{ title: 'Detalles del producto' }}/>
       <Stack.Screen name="UpdateProduct" component={UpdateProduct} options={{ title: 'Actualizar producto' }}/>
+      <Stack.Screen name="MyRequested" component={MyRequested} options={{ title: 'Mis solicitudes' }}/>
     </Stack.Navigator>
   );
 };
